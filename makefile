@@ -2,7 +2,7 @@ CC = gcc
 FLAGS = -Wall -g
 
 all: stringProg
-stringProg: main.c stringProg.c stringProg.h
+stringProg: main.c stringProg.c Ex3_C.h
 	$(CC) $(FLAGS) main.c stringProg.c stringProg.h -o stringProg
 .PHONY: clean all
 
