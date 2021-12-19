@@ -3,6 +3,11 @@
 #include <stdlib.h>
 #include <ctype.h>
 int Anagram_Helper(char *s ,char *e,int,char *w);
+int Atbash_Helper(char*s, char*e, char*w,int);
+char transfer_Letter_To_Atbash(char a);
+void transfer_Word_To_Atbash(char w[30]);
+
+
 
 
 int sum_Total(char word[30]) {
@@ -66,72 +71,74 @@ void Gimatri(char word[30], char txt[1024]){
     helper[index-1]=0;
     printf("%s", helper);
 }
-void abtash( char word[30], char txt[1024]) {
+char transfer_Letter_To_Atbash(char a){
+    int pos= a;
+    if(97<=pos && pos<=122){
+        a='z'-a +'a';
+        return a;
+    }
+    else if(65<= pos && pos<= 90){
+        a = 'Z'-a+'A';
+        return a;
+    }
+    else{
+        pos=0;
+        return pos;
+    }
+}
 
-    int y = strlen(txt);
-    int *w = word;
-    int *t = txt;
-    int *len_txt = t + y;
-    int sum = sum_Total(word);
+void transfer_Word_To_Atbash(char w[30]){
+    int i,a;
+    char temp;
+    char helper[30];
+    for(int i =0 ;i<30;i++) helper[i] = '\000';
+
+    for ( i = 0; i< strlen(w) ; ++i) {
+        a=w[i];
+        if(65<=a&& a<=90) {
+            a = 'Z' - (a - 'A');
+            temp = a;
+            w[i] = temp;
+        } else if(97<=a && a<=122){
+            a= 'z'-(a-'a');
+            temp = a;
+            w[i] = temp;
+        }
+    }
+
+}
+void Atbash(char word[], char txt[]){
+    char new[strlen(word)];
+    for(int i =0 ;i< strlen(word);i++) new[i] = '\000';
+    for (int i = 0; i < strlen(word) ; ++i) {
+        new[i]=word[i];
+    }
     char helper[1024];
-    int a=0, b = 0;
-    int index = 0;
-    for (int i = 0; i < y; ++i) { helper[i] = '\000'; }
-    int small_le = ('a' + 'z');
-    int big_le = ('A' + 'Z');
-    for (char *i = (char *) t; *i != *len_txt; ++i) {
-        int new_Sum = 0;
-        for (char *j = (char *) i; *j != *len_txt; ++j) {
-            a = (int)*j;
-            //checking if a is Big Letter
-            if (65 <= a && a<=90 ) {
-                a = big_le - a;
-                new_Sum = new_Sum + (a - 64);
-            }
-            //checking if a is Small Letter
-            if (97 <=a && a<= 122) {
-                a = small_le - a;
-                new_Sum = new_Sum+ (a - 96);
-            }
-            // if our new sum is greater than the original sum, break.
-            if (sum < new_Sum) break;
-
-            //checking if the sum equal
-            if (sum == new_Sum) {
-                char *s = (char *) i;
-                char *e = (char *) j;
-                a = (int) *s;
-                b = (int) *e;
-
-                // checking if the position we at is a letter
-                int bool_A = ((65 <= a && a<= 90) || (97 <= a && a <= 122));
-                int bool_B = ((65 <= b && b <= 90) || (97 <= b && b <= 122));
-                if (bool_A && bool_B) {
-
-                    while (s <= e) {
-                        helper[index++] = *s++;
-                    }
-                    printf("%c",'~');
-                    break;
-                } else if (!bool_A && bool_B) {
-                    while (s <= e) {
-                        if ((65 <= *s&& *s <= 90) || (97 <= *s&& *s <= 122)) {
-                            helper[index++] = *s++;
-                        } else {
-                            i++, s++;
-                            bool_A = ((65 <= *s && *s <= 90) || (97 <= *s&& *s <= 122));
-                        }
-                    }
-                  helper[index++]= '~';
-                    break;
-                }
+    char *w= new;
+    char *t = txt;
+    int index=0;
+    int wordlen = strlen(new);
+    for(int i =0 ;i<1024;i++) helper[i] = '\000';
+    transfer_Word_To_Atbash(new);
+    if(strstr(txt,new)){
+        for (int i = 0; i < strlen(txt); ++i) {
+            if(i == strlen(new)) break;
+            helper[index++]= new[i];
+        }
+        helper[index++]= '~';
+        char s[strlen(new)];
+        strrev(new);
+        if(strstr(txt,new)) {
+            for (int i = 0; i < strlen(txt); ++i) {
+                if (i == strlen(new)) break;
+                helper[index++] = new[i];
             }
         }
-
-
     }
-    printf("%s", helper);
+
+    printf("%s",helper);
 }
+
 void Anagram (char word[], char txt[]){
     char helper[1024];
     char *t =txt;
@@ -139,6 +146,7 @@ void Anagram (char word[], char txt[]){
     int wordlen = strlen(word);
     int sum = sum_Total(word);
     int  a=0 , b= 0 ,index = 0;
+
 
 
     for(int i =0 ;i<1024;i++) helper[i] = '\000';
@@ -155,8 +163,8 @@ void Anagram (char word[], char txt[]){
                 new_sum += (a - 96);
             }
 
-            if(new_sum > sum) break;
 
+            if(new_sum > sum) break;
             else if(new_sum == sum) {
                 char *start = (char *) i , *end = (char *) j;
                 a = (int)*start;
@@ -198,6 +206,7 @@ void Anagram (char word[], char txt[]){
         }
 
     }
+
     printf("%s", helper);
 
 }
@@ -255,5 +264,7 @@ int Anagram_Helper(char *w, char *t, int wordl, char *word) {
     }
     return 1;
 }
+
+
 
 

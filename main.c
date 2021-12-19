@@ -1,20 +1,26 @@
 #include <stdio.h>
 #include "Ex3_C.h"
 #include <ctype.h>
-int main(){
+#include <string.h>
+
+int main() {
 
     char word[30];
     char txt[1024];
-    scanf("%s",word);
-    scanf("%s",txt);
+    char a[] = "abcd";
+
+
+
+    scanf("%[^\n]", word);
+    scanf("%[^~]", txt);
     printf("Gematria Sequences: ");
-    Gimatri(word,txt);
+    Gimatri(word, txt);
     printf("\n");
     printf("Atbash Sequences: ");
-    abtash(word,txt);
+    Atbash(word, txt);
     printf("\n");
     printf("Anagram Sequences: ");
-    Anagram(word,txt);
-
+    Anagram(word, txt);
+    return 0;
 
 }
