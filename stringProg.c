@@ -6,6 +6,7 @@ int Anagram_Helper(char *s ,char *e,int,char *w);
 int Atbash_Helper(char*s, char*e, char*w,int);
 char transfer_Letter_To_Atbash(char a);
 void transfer_Word_To_Atbash(char w[30]);
+void reverseStr(char str[]);
 
 
 
@@ -107,7 +108,6 @@ void transfer_Word_To_Atbash(char w[30]){
 }
 void Atbash(char word[], char txt[]){
     char new[strlen(word)];
-    char transNew[strlen(word)];
     for(int i =0 ;i< strlen(word);i++) new[i] = '\000';
     for (int i = 0; i < strlen(word) ; ++i) {
         new[i]=word[i];
@@ -122,11 +122,11 @@ void Atbash(char word[], char txt[]){
             helper[index++]= new[i];
         }
         helper[index++]= '~';
-        for(int i = strlen(new) ;i>0 ; i--) transNew[strlen(new) - i ] = new[i];
-        if(strstr(txt,transNew)) {
+        reverseStr(new);
+        if(strstr(txt,new)) {
             for (int i = 0; i < strlen(txt); ++i) {
-                if (i == strlen(transNew)) break;
-                helper[index++] = transNew[i];
+                if (i == strlen(new)) break;
+                helper[index++] = new[i];
             }
         }
     }
@@ -261,5 +261,16 @@ int Anagram_Helper(char *w, char *t, int wordl, char *word) {
 }
 
 
+void reverseStr(char str[])
+{
+  int n = strlen(str);
+
+  for (int i = 0; i < n / 2; i++)
+  {
+    char ch = str[i];
+    str[i] = str[n - i - 1];
+    str[n - i - 1] = ch;
+  }
+}
 
 
