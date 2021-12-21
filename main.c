@@ -7,7 +7,7 @@ int main() {
 
     char word[30];
     char txt[1024];
-    char a[] = "abcd";
+    
 
 
 

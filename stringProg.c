@@ -11,10 +11,9 @@ void transfer_Word_To_Atbash(char w[30]);
 
 
 int sum_Total(char word[30]) {
-    int x, y, sum = 0;
+    int x, sum = 0;
     int temp = 0;
     x = strlen(word);
-    int index = 0;
     for (int i = 0; i < x; ++i) {
         if ( word[i] >= 65 && word[i] <= 90) {
             temp = (int) word[i];
@@ -58,7 +57,7 @@ void Gimatri(char word[30], char txt[1024]){
                     helper[index++] = txt[a++];
 
                 }
-                if (1 <= (toupper(txt[b]) - 'A' + 1) <= 26) {
+                if (1 <= (toupper(txt[b]) - 'A' + 1) && (toupper(txt[b]) - 'A' + 1) <= 26) {
                     helper[index++] = txt[b];
 
                 }
@@ -90,8 +89,7 @@ char transfer_Letter_To_Atbash(char a){
 void transfer_Word_To_Atbash(char w[30]){
     int i,a;
     char temp;
-    char helper[30];
-    for(int i =0 ;i<30;i++) helper[i] = '\000';
+
 
     for ( i = 0; i< strlen(w) ; ++i) {
         a=w[i];
@@ -109,15 +107,13 @@ void transfer_Word_To_Atbash(char w[30]){
 }
 void Atbash(char word[], char txt[]){
     char new[strlen(word)];
+    char transNew[strlen(word)];
     for(int i =0 ;i< strlen(word);i++) new[i] = '\000';
     for (int i = 0; i < strlen(word) ; ++i) {
         new[i]=word[i];
     }
     char helper[1024];
-    char *w= new;
-    char *t = txt;
     int index=0;
-    int wordlen = strlen(new);
     for(int i =0 ;i<1024;i++) helper[i] = '\000';
     transfer_Word_To_Atbash(new);
     if(strstr(txt,new)){
@@ -126,12 +122,11 @@ void Atbash(char word[], char txt[]){
             helper[index++]= new[i];
         }
         helper[index++]= '~';
-        char s[strlen(new)];
-        strrev(new);
-        if(strstr(txt,new)) {
+        for(int i = strlen(new) ;i>0 ; i--) transNew[strlen(new) - i ] = new[i];
+        if(strstr(txt,transNew)) {
             for (int i = 0; i < strlen(txt); ++i) {
-                if (i == strlen(new)) break;
-                helper[index++] = new[i];
+                if (i == strlen(transNew)) break;
+                helper[index++] = transNew[i];
             }
         }
     }
