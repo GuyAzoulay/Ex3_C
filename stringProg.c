@@ -116,6 +116,7 @@ void Atbash(char word[], char txt[]){
     int index=0;
     for(int i =0 ;i<1024;i++) helper[i] = '\000';
     transfer_Word_To_Atbash(new);
+    reverseStr(new);
     if(strstr(txt,new)){
         for (int i = 0; i < strlen(txt); ++i) {
             if(i == strlen(new)) break;
